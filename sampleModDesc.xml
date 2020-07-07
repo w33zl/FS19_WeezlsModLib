@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8" standalone="no" ?>
+<modDesc descVersion="51">
+  
+    <author>w33zl</author>  
+    <version>1.0.0.0</version>
+	
+    <title>
+      <en>This is only a sample</en>
+    </title>
+	
+    <description>
+        <en><![CDATA[Here goes description]]></en>
+    </description>
+
+    <iconFilename>modIcon.dds</iconFilename>
+
+    <multiplayer supported="true"/>
+
+    <extraSourceFiles>
+      <sourceFile filename="lib/modhelper.lua"/>
+    </extraSourceFiles>
+
+</modDesc>
