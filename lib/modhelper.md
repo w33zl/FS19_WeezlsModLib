@@ -214,7 +214,7 @@ Usage:
 
 ## Full example
 
-This is a complete exaple of a fictional mod.
+This is a "complete" exaple of a fictional dummy mod.
 
     local YourMod = Mod:init()
 

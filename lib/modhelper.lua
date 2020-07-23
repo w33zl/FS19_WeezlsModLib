@@ -25,22 +25,6 @@ If you remix, adapt, or build upon the material, you must license the modified m
 
 ]]
 
-
--- ModHelper = {
---     new = function()
---     end--function
--- }
-
-
--- local function printInternal(self, category, message)
---     category = category or ""
---     message = message or ""
---     print(string.format("[%s] %s: %s", self.title, tostring(category):upper(), tostring(message)))
--- end
--- local function printDebug(self, message) self:printInternal("DEBUG", message) end
--- local function printWarning(self, message) self:printInternal("WARNING", message) end
--- local function printError(self, message) self:printInternal("ERROR", message) end
-
 -- This will create the "Mod" base class (and effectively reset any previous references to other mods) 
 Mod = {
 
@@ -141,19 +125,12 @@ function ModSettings:init(name, defaultSettingsFileName, userSettingsFileName)
         return;
     end
 
-    -- if keys == nil or type(keys) ~= "table" then 
-    --     self.__mod.printError("Parameter 'keys' (#1) is mandatory and must contain a table");
-    --     return;
-    -- end
     if defaultSettingsFileName == nil or type(defaultSettingsFileName) ~= "string" then 
         self.__mod.printError("Parameter 'defaultSettingsFileName' (#2) is mandatory and must contain a filename");
         return;
     end
 
     local modSettingsDir = getUserProfileAppPath() .. "modsSettings"
-    -- local newXmlFile = modSettingsDir .. "/" .. RealClock.configFileName
-    -- if not fileExists(newXmlFile) then
-    --     createFolder(modSettingsDir)
 
     self._config = {
         xmlNodeName = name,
@@ -164,18 +141,9 @@ function ModSettings:init(name, defaultSettingsFileName, userSettingsFileName)
         userSettingsPath = modSettingsDir .. "/" .. userSettingsFileName,
     }
 
-    print("userSettingsPath: " .. self._config.userSettingsPath)
-    print("defaultSettingsPath: " .. self._config.defaultSettingsPath)
-
-    -- self.__keys = keys
     return self;
 end
 function ModSettings:load(callback)
-    -- if self._config.xmlNodeName == nil or type(self.__keys) ~= "table" or self.defaultSettingsFileName == nil or type(self.defaultSettingsFileName) ~= "string" then 
-    --     self.__mod.printError("Cannot execute load method of ModSettings, reason was: Not properly initialized, one or more required values is missing. ");
-    --     return;
-    -- end
-
     if not validateParam(callback, "function", "Parameter 'callback' (#1) is mandatory and must contain a valid callback function") then
         return;
     end
@@ -226,7 +194,6 @@ function ModSettings:load(callback)
 
         }
         callback(xmlReader);
-        -- self.position.dynamic = Utils.getNoNil(getXMLBool(xml, "RealClock.position#isDynamic"), RealClock.d.position.dynamic)
     end
 
     if fileExists(defaultSettingsFile) then
@@ -237,36 +204,10 @@ function ModSettings:load(callback)
         executeXmlReader(xmlNodeName, userSettingsFile, callback);
     end
 
-
-
-    -- if callback == nil or type(callback) ~= "function" then 
-    --     self.__mod.printError("Parameter 'callback' (#1) is mandatory and must contain a valid callback function");
-    --     return;
-    -- end
-
-    -- local xml = loadXMLFile("RealClock", fileName)
-    -- self.position.dynamic = Utils.getNoNil(getXMLBool(xml, "RealClock.position#isDynamic"), RealClock.d.position.dynamic)
-  
-
-    -- for key, value in pairs(self.__keys) do
-    --     print("Found key '" .. key .. "' = " .. type(value))
-    -- end
-    -- return self;
 end
 
 
 function ModSettings:save(callback)
-    
-    -- setXMLBool(xml, "RealClock.position#isDynamic", self.position.dynamic)
-    -- setXMLFloat(xml, "RealClock.position#x", self.position.x)
-    -- setXMLFloat(xml, "RealClock.position#y", self.position.y)
-    -- setXMLString(xml, "RealClock.rendering#color", self.rendering.color)
-    -- setXMLFloat(xml, "RealClock.rendering#fontSize", self.rendering.fontSize)
-    -- setXMLString(xml, "RealClock.format#string", self.timeFormat)
-    -- saveXMLFile(xml)
-    -- delete(xml)    
-
-
     if not validateParam(callback, "function", "Parameter 'callback' (#1) is mandatory and must contain a valid callback function") then
         return;
     end
@@ -284,7 +225,6 @@ function ModSettings:save(callback)
     end
 
     local function executeXmlWriter(xmlNodeName, fileName, callback)
-        -- local xmlFile = loadXMLFile(xmlNodeName, fileName)
         local xmlFile = createXMLFile(xmlNodeName, fileName, xmlNodeName)
 
         if xmlFile == nil then
@@ -343,21 +283,6 @@ end--function
 function Mod:init()
     local newMod = self:new();
 
--- print("g_brandColorManager:", tostring(g_brandColorManager))
--- print("g_logManager:", tostring(g_logManager))
-
--- print("g_currentMission:", tostring(g_currentMission))
--- print("g_languageShort:", tostring(g_languageShort))
--- print("NetworkUtil:", tostring(NetworkUtil))
--- print("g_languageShort:", tostring(g_languageShort))
-
--- print("g_brandManager:", tostring(g_brandManager))
--- DebugUtil.printTableRecursively(g_brandManager,".",0,2);
-
--- print("g_brandManager.indexToBrand:")
--- DebugUtil.printTableRecursively(g_brandManager.indexToBrand,".",0,2);
-
-
     addModEventListener(newMod);
 
     print(string.format("Load mod: %s (v%s) by %s", newMod.title, newMod.version, newMod.author))
@@ -380,19 +305,6 @@ function Mod:new()
     newMod.author = getXMLString(modDescXML, "modDesc.author");
     newMod.version = getXMLString(modDescXML, "modDesc.version");
     delete(modDescXML);
-    
-    -- print(string.format("Load mod: %s (v%s) by %s", newMod.title, newMod.version, newMod.author))
 
     return newMod;
 end--function
-
--- ModSettings = {}
--- function ModSettings:new(filename)
---     if not filename then
---         print("Warning: Parameter 'filename' is required.");
---     end
--- end--if
-
-
-
-
